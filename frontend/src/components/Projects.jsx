@@ -138,12 +138,22 @@ const Projects = () => {
               <div className="space-y-6">
                 {/* Image Gallery */}
                 <div className="space-y-4">
-                  <div className="relative h-96 rounded-lg overflow-hidden">
-                    <img
-                      src={selectedProject.gallery[currentImageIndex]}
-                      alt={`${selectedProject.title} - ${currentImageIndex + 1}`}
-                      className="w-full h-full object-cover"
-                    />
+                  <div 
+                    className="relative h-96 rounded-lg overflow-hidden"
+                    style={selectedProject.isPattern ? {
+                      backgroundImage: `url("${selectedProject.gallery[currentImageIndex]}")`,
+                      backgroundSize: 'auto',
+                      backgroundRepeat: 'repeat',
+                      backgroundColor: '#fafafa'
+                    } : {}}
+                  >
+                    {!selectedProject.isPattern && (
+                      <img
+                        src={selectedProject.gallery[currentImageIndex]}
+                        alt={`${selectedProject.title} - ${currentImageIndex + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
                   </div>
                   <div className="flex gap-2 overflow-x-auto">
                     {selectedProject.gallery.map((img, idx) => (
@@ -155,12 +165,20 @@ const Projects = () => {
                             ? 'border-[#b8936a]'
                             : 'border-[#e5e5e5] opacity-60 hover:opacity-100'
                         }`}
+                        style={selectedProject.isPattern ? {
+                          backgroundImage: `url("${img}")`,
+                          backgroundSize: 'auto',
+                          backgroundRepeat: 'repeat',
+                          backgroundColor: '#fafafa'
+                        } : {}}
                       >
-                        <img
-                          src={img}
-                          alt={`Thumbnail ${idx + 1}`}
-                          className="w-full h-full object-cover"
-                        />
+                        {!selectedProject.isPattern && (
+                          <img
+                            src={img}
+                            alt={`Thumbnail ${idx + 1}`}
+                            className="w-full h-full object-cover"
+                          />
+                        )}
                       </button>
                     ))}
                   </div>
