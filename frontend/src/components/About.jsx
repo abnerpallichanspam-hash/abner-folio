@@ -54,14 +54,15 @@ const About = () => {
 
           {/* Right Content - Education & Image */}
           <div className="space-y-8">
-            <div className="relative h-96 rounded-lg overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1588729533739-f2cf4a063a95?crop=entropy&cs=srgb&fm=jpg&q=85"
-                alt="Professional workspace"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f10]/60 to-transparent" />
-            </div>
+            <div 
+              className="relative h-96 rounded-lg overflow-hidden"
+              style={{
+                backgroundImage: `url("${require('../data/geometricPatterns').geometricPatterns.professional1}")`,
+                backgroundSize: 'auto',
+                backgroundRepeat: 'repeat',
+                backgroundColor: '#fafafa'
+              }}
+            />
 
             {/* Education */}
             <div className="bg-[#fafafa] p-8 rounded-lg">
