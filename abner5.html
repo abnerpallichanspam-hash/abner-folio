@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abner Pallichan — Security Systems Estimator</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1a1814;--paper:#f5f2ec;--warm:#e8e2d6;
+  --accent:#8b6f47;--al:#c4a882;--ap:#f0e8db;--muted:#7a7168;
+  --serif:'Cormorant Garamond',Palatino,Georgia,serif;
+  --sans:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+  --ease:cubic-bezier(.25,.46,.45,.94);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);overflow-x:hidden;line-height:1.6;font-weight:300}
+
+/* scrollbar */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--warm)}
+::-webkit-scrollbar-thumb{background:var(--al)}
+
+/* custom cursor */
+#cdot,#cring{
+  position:fixed;pointer-events:none;border-radius:50%;
+  left:-100px;top:-100px;
+  transform:translate(-50%,-50%);
+  opacity:0;transition:opacity .3s;
+}
+#cdot{width:8px;height:8px;background:var(--accent);z-index:9999;transition:width .2s,height .2s,opacity .3s}
+#cring{width:32px;height:32px;border:1.5px solid var(--accent);z-index:9998;transition:width .35s var(--ease),height .35s var(--ease),opacity .3s}
+body.cur #cdot,body.cur #cring{opacity:1}
+body.cur{cursor:none}
+body.cur #cring{opacity:.5}
+body.cur.ch #cdot{width:14px;height:14px}
+body.cur.ch #cring{width:54px;height:54px;opacity:.2}
+@media(pointer:coarse){body.cur{cursor:auto}#cdot,#cring{display:none!important}}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.2rem 3rem;background:rgba(245,242,236,.96);
+  backdrop-filter:blur(12px);border-bottom:1px solid transparent;
+  transition:border-color .4s,padding .4s;
+}
+nav.sc{border-color:var(--warm);padding:.8rem 3rem}
+.nl{font-family:var(--serif);font-size:1.1rem;font-weight:500;color:var(--ink);text-decoration:none;letter-spacing:.02em}
+.nls{display:flex;gap:2rem;list-style:none}
+.nls a{font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s;font-weight:400}
+.nls a:hover{color:var(--ink)}
+.ncta{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);padding:.45rem 1.2rem;text-decoration:none;transition:background .3s,color .3s}
+.ncta:hover{background:var(--accent);color:var(--paper)}
+.ham{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:8px;cursor:pointer;z-index:1010;position:relative}
+.ham span{display:block;width:22px;height:1.5px;background:var(--ink);transition:transform .3s,opacity .3s}
+.ham.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.ham.open span:nth-child(2){opacity:0}
+.ham.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+/* ── MOBILE MENU ── */
+.mob{
+  position:fixed;inset:0;z-index:950;
+  background:var(--ink);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;
+  opacity:0;visibility:hidden;transition:opacity .3s var(--ease),visibility .3s;
+}
+.mob.open{opacity:1;visibility:visible}
+.mob a{
+  font-family:var(--serif);font-size:clamp(1.9rem,7vw,3rem);font-weight:300;
+  color:rgba(245,242,236,.82);text-decoration:none;letter-spacing:.02em;
+  transition:color .2s;
+}
+.mob a:hover,.mob a:active{color:var(--al)}
+.mob-sub{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(245,242,236,.3);text-decoration:none;margin-top:.5rem;transition:color .2s}
+.mob-sub:hover{color:var(--al)}
+
+/* ── HERO ── */
+#hero{min-height:100svh;display:grid;grid-template-columns:1fr 1fr;padding-top:4.5rem;overflow:hidden}
+.hl{display:flex;flex-direction:column;justify-content:center;padding:5rem 3rem}
+@keyframes fu{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.htag{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:1.8rem;animation:fu .8s var(--ease) .2s both}
+.hname{font-family:var(--serif);font-size:clamp(3rem,5.5vw,5.8rem);font-weight:300;line-height:1;letter-spacing:-.02em;animation:fu .9s var(--ease) .4s both}
+.hname em{font-style:italic;color:var(--accent)}
+.hdesc{margin-top:1.8rem;font-size:.96rem;color:var(--muted);max-width:38ch;line-height:1.78;animation:fu .8s var(--ease) .65s both}
+.hbtns{margin-top:2.5rem;display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap;animation:fu .8s var(--ease) .85s both}
+.btnp{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:.8rem 1.8rem;text-decoration:none;transition:background .3s;white-space:nowrap}
+.btnp:hover{background:var(--accent)}
+.btns{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--warm);padding-bottom:2px;transition:color .3s,border-color .3s;white-space:nowrap}
+.btns:hover{color:var(--ink);border-color:var(--ink)}
+.hr{position:relative;overflow:hidden;animation:fi 1.2s var(--ease) .3s both}
+.hr-photo{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1400&q=80') center/cover}
+.hr-ov{position:absolute;inset:0;background:linear-gradient(135deg,rgba(139,111,71,.3),rgba(26,24,20,.55))}
+.hstats{position:absolute;bottom:2.5rem;left:2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;z-index:2}
+.stn{font-family:var(--serif);font-size:2.2rem;font-weight:300;line-height:1;color:var(--paper)}
+.stl{font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;color:rgba(245,242,236,.55);margin-top:.2rem}
+
+/* ── SECTIONS ── */
+section{padding:5rem 3rem}
+.lbl{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:.9rem}
+.ttl{font-family:var(--serif);font-size:clamp(2rem,3.8vw,3.2rem);font-weight:300;line-height:1.1;letter-spacing:-.01em}
+.ttl em{font-style:italic}
+.rul{width:2.5rem;height:1px;background:var(--al);margin:1.4rem 0 2rem}
+
+/* ── ABOUT ── */
+#about{background:var(--ink);color:var(--paper);padding:0;overflow:hidden}
+#about .lbl{color:var(--al)}
+#about .ttl{color:var(--paper)}
+#about .rul{background:var(--accent)}
+.abl{display:grid;grid-template-columns:1fr 1fr;min-height:580px}
+.ab-left{padding:5rem 3rem;display:flex;flex-direction:column;justify-content:center}
+.ab-bio{font-size:.96rem;line-height:1.88;color:rgba(245,242,236,.68)}
+.ab-bio p+p{margin-top:1.3rem}
+.ab-right{position:relative;overflow:hidden;min-height:320px}
+.ab-photo{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80') center/cover}
+.ab-photo-ov{position:absolute;inset:0;background:rgba(26,24,20,.3)}
+.detbar{background:#0e0c09;padding:3rem}
+.detgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0}
+.dr{padding:1rem 1.5rem 1rem 0;border-bottom:1px solid rgba(245,242,236,.07)}
+.drk{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--al);display:block;margin-bottom:.3rem}
+.drv{font-size:.84rem;color:rgba(245,242,236,.68)}
+
+/* ── BANNER ── */
+.banner{height:320px;position:relative;overflow:hidden;background:#1a1814}
+.ban-photo{position:absolute;inset:0;background-size:cover;background-position:center}
+.ban-ov{position:absolute;inset:0;background:rgba(26,24,20,.5)}
+.ban-cap{position:absolute;bottom:2rem;left:3rem;z-index:2;font-family:var(--serif);font-size:clamp(1.3rem,3vw,2rem);font-weight:300;color:rgba(245,242,236,.78);letter-spacing:.02em}
+.ban-cap em{font-style:italic;color:var(--al)}
+
+/* ── EXPERIENCE ── */
+#experience{background:var(--paper)}
+.exlay{display:grid;grid-template-columns:5fr 3fr;gap:4rem;align-items:start;margin-top:2.5rem}
+.tl{position:relative;padding-left:1.8rem}
+.tl::before{content:'';position:absolute;left:0;top:.4rem;bottom:0;width:1px;background:var(--warm)}
+.tli{position:relative;padding-bottom:3rem}
+.tli::before{content:'';position:absolute;left:-1.8rem;top:.42rem;width:7px;height:7px;border-radius:50%;background:var(--accent);transform:translateX(calc(-50% + .5px))}
+.tmeta{font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem}
+.trole{font-family:var(--serif);font-size:1.4rem;font-weight:400;margin-bottom:.15rem}
+.tco{font-size:.84rem;color:var(--muted);margin-bottom:.9rem}
+.tlist{list-style:none}
+.tlist li{font-size:.86rem;line-height:1.8;color:var(--muted);padding-left:1.1rem;position:relative;margin-bottom:.25rem}
+.tlist li::before{content:'—';position:absolute;left:0;color:var(--al);font-size:.72rem;line-height:1.8}
+.eximgs{display:flex;flex-direction:column;gap:3px;position:sticky;top:5.5rem}
+.eximg{overflow:hidden;aspect-ratio:4/3}
+.eximg img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(15%);transition:filter .4s,transform .5s var(--ease)}
+.eximg:hover img{filter:grayscale(0%);transform:scale(1.04)}
+.excap{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:.4rem}
+
+/* ── SKILLS ── */
+#skills{background:var(--ap);padding:0;overflow:hidden}
+.sklay{display:grid;grid-template-columns:3fr 1fr}
+.skcont{padding:5rem 3rem}
+.skgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:2.5rem}
+.skg{background:var(--paper);padding:2rem 1.6rem;transition:background .4s}
+.skg:hover{background:var(--ink)}
+.skg:hover .sk-lbl{color:var(--al)}
+.skg:hover .sk-ttl{color:var(--paper)}
+.skg:hover .pill{background:rgba(245,242,236,.08);color:rgba(245,242,236,.65)}
+.sk-lbl{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:.8rem;transition:color .4s}
+.sk-ttl{font-family:var(--serif);font-size:1.1rem;margin-bottom:1.2rem;transition:color .4s}
+.pills{display:flex;flex-wrap:wrap;gap:.4rem}
+.pill{font-size:.66rem;background:var(--ap);color:var(--muted);padding:.28rem .75rem;transition:background .4s,color .4s}
+.skphotos{display:flex;flex-direction:column}
+.skph{flex:1;min-height:180px;overflow:hidden}
+.skph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--ease)}
+.skph:hover img{transform:scale(1.05)}
+
+/* ── PROJECTS ── */
+#projects{background:var(--paper)}
+.fb{display:flex;gap:.5rem;margin-bottom:2.5rem;flex-wrap:wrap}
+.fbb{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;background:none;border:1px solid var(--warm);color:var(--muted);padding:.48rem 1.1rem;cursor:pointer;transition:all .3s;font-family:var(--sans);font-weight:400}
+.fbb.act,.fbb:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.pc{position:relative;overflow:hidden;cursor:pointer;aspect-ratio:4/3;transition:transform .4s var(--ease)}
+.pc:hover{transform:scale(0.983)}
+.pc:hover .pco{opacity:1}
+.pc:hover .pcc{transform:translateY(0);opacity:1}
+.pc:hover .plbl{opacity:0}
+.istrip{position:absolute;inset:0;display:flex;transition:transform .7s var(--ease)}
+.islide{flex:0 0 100%;height:100%;background-size:cover;background-position:center}
+.pvig{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,24,20,.65) 0%,rgba(26,24,20,.1) 45%,transparent 70%);z-index:1;pointer-events:none}
+.plbl{position:absolute;bottom:1.2rem;left:1.3rem;z-index:2;font-family:var(--serif);font-size:1rem;font-weight:300;color:rgba(245,242,236,.95);pointer-events:none;line-height:1.3;text-shadow:0 1px 10px rgba(0,0,0,.7);transition:opacity .3s}
+.pclbl{font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:var(--al);display:block;margin-bottom:.25rem}
+.pdots{position:absolute;bottom:1rem;right:1rem;z-index:2;display:flex;gap:4px;pointer-events:none}
+.pdots span{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.28);transition:background .3s}
+.pdots span.on{background:var(--al)}
+.pco{position:absolute;inset:0;background:rgba(26,24,20,.85);opacity:0;transition:opacity .4s;display:flex;align-items:flex-end;padding:1.8rem;z-index:3}
+.pcc{transform:translateY(10px);opacity:0;transition:transform .4s var(--ease),opacity .4s}
+.pccat{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--al);margin-bottom:.4rem}
+.pcttl{font-family:var(--serif);font-size:1.3rem;font-weight:300;color:var(--paper);line-height:1.2;margin-bottom:.35rem}
+.pcsub{font-size:.74rem;color:rgba(245,242,236,.55)}
+.parr{position:absolute;top:1.3rem;right:1.3rem;color:var(--paper);opacity:0;z-index:4;transition:opacity .4s,transform .4s;font-size:1.1rem}
+.pc:hover .parr{opacity:1;transform:translate(3px,-3px)}
+
+/* ── MODAL ── */
+.mw{position:fixed;inset:0;background:rgba(26,24,20,.93);z-index:2000;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .4s;backdrop-filter:blur(10px)}
+.mw.open{opacity:1;pointer-events:all}
+.modal{background:var(--paper);max-width:820px;width:100%;max-height:92svh;overflow-y:auto;transform:translateY(16px);transition:transform .4s var(--ease);position:relative}
+.mw.open .modal{transform:translateY(0)}
+.mgal{width:100%;height:260px;position:relative;overflow:hidden}
+.mgs{display:flex;height:100%;transition:transform .6s var(--ease)}
+.mgsl{flex:0 0 100%;height:100%;background-size:cover;background-position:center}
+.mgfb{flex:0 0 100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.4rem;font-weight:300;color:rgba(196,168,130,.3)}
+.mgpb,.mgnb{position:absolute;top:50%;transform:translateY(-50%);background:rgba(26,24,20,.55);color:var(--paper);border:none;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5;transition:background .3s;font-size:.85rem}
+.mgpb{left:.9rem}.mgnb{right:.9rem}
+.mgpb:hover,.mgnb:hover{background:var(--accent)}
+.mgdt{position:absolute;bottom:.8rem;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:5}
+.mgdt span{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.3);transition:background .3s}
+.mgdt span.on{background:var(--al)}
+.mbody{padding:2rem}
+.mcat{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem}
+.mttl{font-family:var(--serif);font-size:1.8rem;font-weight:300;margin-bottom:.35rem}
+.mco{font-size:.82rem;color:var(--muted);margin-bottom:1.2rem}
+.mtxt{font-size:.86rem;line-height:1.85;color:var(--muted)}
+.mtags{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.3rem}
+.mtag{font-size:.64rem;letter-spacing:.06em;background:var(--ap);color:var(--accent);padding:.28rem .75rem}
+.mclose{position:absolute;top:.8rem;right:.8rem;background:var(--ink);color:var(--paper);border:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.9rem;transition:background .3s;z-index:10}
+.mclose:hover{background:var(--accent)}
+
+/* ── CONTACT ── */
+#contact{background:var(--ink);padding:0;overflow:hidden}
+#contact .lbl{color:var(--al)}
+#contact .ttl{color:var(--paper)}
+#contact .rul{background:var(--accent)}
+.ctlay{display:grid;grid-template-columns:1fr 1fr}
+.ctleft{padding:5rem 3rem;position:relative;overflow:hidden}
+.ctbg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?w=1200&q=80') center/cover;opacity:.15}
+.ctcon{position:relative;z-index:1}
+.cttxt{font-size:.92rem;color:rgba(245,242,236,.58);line-height:1.85;margin-bottom:2.2rem}
+.cttxt p+p{margin-top:.9rem}
+.ci{display:flex;gap:1.2rem;align-items:baseline;padding:.85rem 0;border-bottom:1px solid rgba(245,242,236,.07)}
+.ci:first-child{border-top:1px solid rgba(245,242,236,.07)}
+.cik{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--al);min-width:5rem;flex-shrink:0}
+.civ{font-size:.84rem;color:rgba(245,242,236,.68)}
+.civ a{color:inherit;text-decoration:none;transition:color .3s}
+.civ a:hover{color:var(--al)}
+.ctright{padding:5rem 3rem;background:#0c0a07;display:flex;flex-direction:column;justify-content:center}
+.cf{display:flex;flex-direction:column;gap:1.1rem}
+.cfl{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,242,236,.35);display:block;margin-bottom:.35rem}
+.cf input,.cf textarea{width:100%;background:rgba(245,242,236,.05);border:1px solid rgba(245,242,236,.1);color:var(--paper);padding:.8rem .9rem;font-family:var(--sans);font-size:.84rem;font-weight:300;outline:none;resize:none;transition:border-color .3s,background .3s;-webkit-appearance:none;border-radius:0}
+.cf input:focus,.cf textarea:focus{border-color:var(--accent);background:rgba(245,242,236,.08)}
+.cf textarea{min-height:110px}
+.btsub{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;background:var(--accent);color:var(--paper);border:none;padding:.9rem 1.8rem;cursor:pointer;font-family:var(--sans);font-weight:400;transition:background .3s;align-self:flex-start;-webkit-appearance:none;border-radius:0}
+.btsub:hover{background:var(--al)}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);padding:1.8rem 3rem;border-top:1px solid rgba(245,242,236,.05);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem}
+.flog{font-family:var(--serif);font-size:.95rem;color:rgba(245,242,236,.3)}
+.fcop{font-size:.66rem;color:rgba(245,242,236,.22);letter-spacing:.04em}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media(max-width:1100px){
+  .skgrid{grid-template-columns:1fr 1fr}
+  .exlay{grid-template-columns:1fr}
+  .eximgs{display:grid;grid-template-columns:1fr 1fr 1fr;position:static;gap:3px}
+}
+@media(max-width:900px){
+  /* NAV */
+  nav{padding:1rem 1.25rem}
+  nav.sc{padding:.75rem 1.25rem}
+  .nls,.ncta{display:none}
+  .ham{display:flex}
+  /* HERO */
+  #hero{grid-template-columns:1fr;min-height:auto;padding-top:4rem}
+  .hl{padding:4rem 1.25rem 2.5rem}
+  .hr{height:52vw;min-height:220px}
+  .hstats{left:1.25rem;bottom:1.25rem;gap:1rem}
+  .stn{font-size:1.7rem}
+  /* ABOUT */
+  .abl{grid-template-columns:1fr}
+  .ab-right{min-height:240px}
+  .ab-left{padding:3.5rem 1.25rem 2.5rem}
+  .detbar{padding:2rem 1.25rem}
+  .detgrid{grid-template-columns:1fr 1fr}
+  /* BANNERS */
+  .banner{height:200px}
+  .ban-cap{left:1.25rem;font-size:1.2rem}
+  /* EXPERIENCE */
+  #experience{padding:4rem 1.25rem}
+  .exlay{gap:2.5rem}
+  .eximgs{grid-template-columns:1fr 1fr}
+  /* SKILLS */
+  .sklay{grid-template-columns:1fr}
+  .skcont{padding:4rem 1.25rem}
+  .skgrid{grid-template-columns:1fr}
+  .skphotos{flex-direction:row;height:180px}
+  .skph{min-height:auto}
+  /* PROJECTS */
+  #projects{padding:4rem 1.25rem}
+  .pg{grid-template-columns:1fr 1fr}
+  /* CONTACT */
+  .ctlay{grid-template-columns:1fr}
+  .ctleft,.ctright{padding:4rem 1.25rem}
+  /* FOOTER */
+  footer{padding:1.5rem 1.25rem;justify-content:center;text-align:center}
+  section{padding:4rem 1.25rem}
+}
+@media(max-width:600px){
+  .pg{grid-template-columns:1fr}
+  .detgrid{grid-template-columns:1fr}
+  .hstats{grid-template-columns:1fr 1fr}
+  .eximgs{grid-template-columns:1fr 1fr}
+  .skphotos{height:140px}
+  .skgrid{grid-template-columns:1fr}
+  .mgal{height:200px}
+}
+</style>
+</head>
+<body>
+
+<div id="cdot"></div>
+<div id="cring"></div>
+
+<!-- ── MOBILE MENU ── -->
+<div class="mob" id="mob">
+  <a href="#about">About</a>
+  <a href="#experience">Experience</a>
+  <a href="#skills">Skills</a>
+  <a href="#projects">Projects</a>
+  <a href="#contact">Contact</a>
+  <a href="/cdn-cgi/l/email-protection#d5b4b7bbb0a7a5b4b9b9bcb6bdb4bb95b2b8b4bcb9fbb6bab8" class="mob-sub"><span class="__cf_email__" data-cfemail="1a7b78747f686a7b76767379727b745a7d777b737634797577">[email&#160;protected]</span></a>
+</div>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <a href="#hero" class="nl">AP</a>
+  <ul class="nls">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="/cdn-cgi/l/email-protection#bddcdfd3d8cfcddcd1d1d4ded5dcd3fddad0dcd4d193ded2d0" class="ncta">Hire Me</a>
+  <button class="ham" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hl">
+    <div class="htag">Security Systems &middot; Project Engineering &middot; CAD &amp; BIM</div>
+    <h1 class="hname">Abner<br><em>Pallichan</em></h1>
+    <p class="hdesc">Security Systems Estimator and Project Engineer with 3+ years delivering precision cost plans, technical documentation, and tendering solutions across healthcare and commercial sectors.</p>
+    <div class="hbtns">
+      <a href="#projects" class="btnp">View Work</a>
+      <a href="#contact" class="btns">Get In Touch</a>
+    </div>
+  </div>
+  <div class="hr">
+    <div class="hr-photo"></div>
+    <div class="hr-ov"></div>
+    <div class="hstats">
+      <div><div class="stn">3+</div><div class="stl">Years Experience</div></div>
+      <div><div class="stn">AU&middot;UK</div><div class="stl">Regions</div></div>
+      <div><div class="stn">4</div><div class="stl">Companies</div></div>
+      <div><div class="stn">CAD</div><div class="stl">BIM Proficient</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section id="about">
+  <div class="abl">
+    <div class="ab-left">
+      <div class="lbl">About</div>
+      <h2 class="ttl">Built on precision,<br><em>driven by detail</em></h2>
+      <div class="rul"></div>
+      <div class="ab-bio">
+        <p>I'm a Security Systems Estimator and Project Engineer with a background in civil engineering and a specialisation in low-voltage security infrastructure. My work spans access control, nurse call systems, and electrical packages across healthcare and commercial environments.</p>
+        <p>Based in London, I bring competitive tendering, accurate take-offs, and CAD/BIM-integrated documentation together with strong client and stakeholder management — ensuring projects are delivered accurately, on time, and within margin.</p>
+        <p>Previously based in Melbourne, I developed hands-on expertise across multiple firms before relocating to the UK, where I continue to grow my practice in the security systems sector.</p>
+      </div>
+    </div>
+    <div class="ab-right">
+      <div class="ab-photo"></div>
+      <div class="ab-photo-ov"></div>
+    </div>
+  </div>
+  <div class="detbar">
+    <div class="detgrid">
+      <div class="dr"><span class="drk">Location</span><span class="drv">London, United Kingdom</span></div>
+      <div class="dr"><span class="drk">Email</span><span class="drv"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f7969599928587969b9b9e949f9699b7909a969e9bd994989a">[email&#160;protected]</a></span></div>
+      <div class="dr"><span class="drk">Phone</span><span class="drv">+44 07386 804046</span></div>
+      <div class="dr"><span class="drk">Specialties</span><span class="drv">Estimating &middot; Access Control &middot; CAD/BIM</span></div>
+      <div class="dr"><span class="drk">Interests</span><span class="drv">Music Production &middot; Bouldering &middot; Hiking</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- BANNER 1 -->
+<div class="banner">
+  <div class="ban-photo" style="background-image:url('https://images.unsplash.com/photo-1590274853856-f22d5ee3d228?w=1600&q=80')"></div>
+  <div class="ban-ov"></div>
+  <div class="ban-cap">Healthcare infrastructure &nbsp;<em>at scale</em></div>
+</div>
+
+<!-- ══ EXPERIENCE ══ -->
+<section id="experience">
+  <div class="lbl">Experience</div>
+  <h2 class="ttl">A record of<br><em>purposeful work</em></h2>
+  <div class="rul"></div>
+  <div class="exlay">
+    <div class="tl">
+      <div class="tli">
+        <div class="tmeta">Sept 2025 &ndash; Present</div>
+        <div class="trole">Supervisor</div>
+        <div class="tco">Ria's &middot; London, UK</div>
+        <ul class="tlist">
+          <li>Manage operational performance, stock control, and staff coordination in a high-volume environment.</li>
+          <li>Maintain accurate records, reporting, and reconciliation of inventory and costs.</li>
+          <li>Develop strong customer relationships and resolve operational issues under pressure.</li>
+        </ul>
+      </div>
+      <div class="tli">
+        <div class="tmeta">Sept 2024 &ndash; May 2025</div>
+        <div class="trole">Project Manager / Estimator</div>
+        <div class="tco">Hills Health Solutions &middot; Melbourne, Australia</div>
+        <ul class="tlist">
+          <li>Prepared detailed cost estimates and proposals for nurse call and healthcare security systems across hospital and aged care facilities — including Footscray Hospital, Epworth Freemasons, and Alfred Hospital.</li>
+          <li>Conducted site surveys, reviewed technical drawings, and produced accurate take-offs, BOQs, and procurement schedules.</li>
+          <li>Liaised with clients, suppliers, and installation teams to validate scope, pricing, and system specifications.</li>
+          <li>Integrated CAD outputs into commercial submissions, ensuring compliance with healthcare and electrical standards.</li>
+          <li>Identified project risks and cost variations, maintaining profitability and commercial control.</li>
+        </ul>
+      </div>
+      <div class="tli">
+        <div class="tmeta">Jul 2023 &ndash; Sept 2024</div>
+        <div class="trole">Project Coordinator / Estimator</div>
+        <div class="tco">Austco &middot; Melbourne, Australia</div>
+        <ul class="tlist">
+          <li>Produced high-volume material take-offs and cost plans from AutoCAD and Bluebeam for access control and electrical systems.</li>
+          <li>Estimated security infrastructure including card readers, cabling routes, control panels, door hardware, and system components.</li>
+          <li>Prepared tender documentation, pricing schedules, and supplier comparisons.</li>
+          <li>Developed standardised CAD templates and workflows to improve estimating accuracy and documentation quality.</li>
+          <li>Acted as technical interface between clients, design teams, and contractors throughout the tender and delivery stages.</li>
+        </ul>
+      </div>
+      <div class="tli">
+        <div class="tmeta">Aug 2022 &ndash; Jul 2023</div>
+        <div class="trole">Project Engineer</div>
+        <div class="tco">Teknocorp &middot; Melbourne, Australia</div>
+        <ul class="tlist">
+          <li>Produced technical drawings and installation schematics for security packages across Northern Hospital Epping, Mt Eliza Aged Care, and FRV fire stations statewide.</li>
+          <li>Updated as-built documentation to reflect site conditions and system changes.</li>
+          <li>Supported commercial teams with design revisions, system layouts, and pricing inputs.</li>
+          <li>Assisted with project handovers, compliance documentation, and client technical queries.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="eximgs">
+      <div class="eximg">
+        <img src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=600&q=80" alt="Hospital construction" loading="lazy">
+        <div class="excap">Healthcare construction</div>
+      </div>
+      <div class="eximg">
+        <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&q=80" alt="Technical drawings" loading="lazy">
+        <div class="excap">Technical documentation</div>
+      </div>
+      <div class="eximg">
+        <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=600&q=80" alt="Modern infrastructure" loading="lazy">
+        <div class="excap">Modern infrastructure</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BANNER 2 -->
+<div class="banner">
+  <div class="ban-photo" style="background-image:url('https://images.unsplash.com/photo-1507149833265-60c372daea22?w=1600&q=80')"></div>
+  <div class="ban-ov"></div>
+  <div class="ban-cap">Precision &nbsp;<em>in every line</em></div>
+</div>
+
+<!-- ══ SKILLS ══ -->
+<section id="skills">
+  <div class="sklay">
+    <div class="skcont">
+      <div class="lbl">Skills &amp; Expertise</div>
+      <h2 class="ttl">The tools of<br><em>the craft</em></h2>
+      <div class="rul"></div>
+      <div class="skgrid">
+        <div class="skg">
+          <div class="sk-lbl">Commercial</div>
+          <div class="sk-ttl">Estimating &amp; Tendering</div>
+          <div class="pills">
+            <span class="pill">Take-offs &amp; BOQs</span><span class="pill">Tender Submissions</span>
+            <span class="pill">Cost Plans</span><span class="pill">Supplier Negotiations</span>
+            <span class="pill">Risk Identification</span><span class="pill">Scope Validation</span>
+            <span class="pill">Proposal Writing</span>
+          </div>
+        </div>
+        <div class="skg">
+          <div class="sk-lbl">Technical</div>
+          <div class="sk-ttl">Security Systems</div>
+          <div class="pills">
+            <span class="pill">Access Control</span><span class="pill">Nurse Call Systems</span>
+            <span class="pill">Low-Voltage Infrastructure</span><span class="pill">Cabling Routes</span>
+            <span class="pill">System Layouts</span><span class="pill">Equipment Schedules</span>
+          </div>
+        </div>
+        <div class="skg">
+          <div class="sk-lbl">Software</div>
+          <div class="sk-ttl">CAD &amp; Digital Tools</div>
+          <div class="pills">
+            <span class="pill">AutoCAD</span><span class="pill">Revit</span><span class="pill">Civil 3D</span>
+            <span class="pill">Bluebeam</span><span class="pill">Planswift</span><span class="pill">SimPro</span>
+            <span class="pill">MS Excel</span><span class="pill">Adobe Suite</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="skphotos">
+      <div class="skph"><img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=700&q=80" alt="CAD design" loading="lazy"></div>
+      <div class="skph"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80" alt="Security systems" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROJECTS ══ -->
+<section id="projects">
+  <div class="lbl">Portfolio</div>
+  <h2 class="ttl">Selected<br><em>project work</em></h2>
+  <div class="rul"></div>
+  <div class="fb" id="filterBar">
+    <button class="fbb act" data-filter="all">All Projects</button>
+    <button class="fbb" data-filter="hills">Hills Health Solutions</button>
+    <button class="fbb" data-filter="tekno">Teknocorp</button>
+  </div>
+  <div class="pg" id="pg"></div>
+</section>
+
+<!-- MODAL -->
+<div class="mw" id="mw">
+  <div class="modal">
+    <button class="mclose" id="mc">&#10005;</button>
+    <div class="mgal">
+      <div class="mgs" id="mgs"></div>
+      <button class="mgpb" id="mgp">&#8592;</button>
+      <button class="mgnb" id="mgn">&#8594;</button>
+      <div class="mgdt" id="mgd"></div>
+    </div>
+    <div class="mbody">
+      <div class="mcat" id="mcat"></div>
+      <div class="mttl" id="mttl"></div>
+      <div class="mco" id="mco"></div>
+      <div class="mtxt" id="mtxt"></div>
+      <div class="mtags" id="mta"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact">
+  <div class="ctlay">
+    <div class="ctleft">
+      <div class="ctbg"></div>
+      <div class="ctcon">
+        <div class="lbl">Contact</div>
+        <h2 class="ttl">Let's build<br><em>something together</em></h2>
+        <div class="rul"></div>
+        <div class="cttxt">
+          <p>Available for estimating, project engineering, and CAD/BIM roles across the UK. I bring a rigorous, detail-first approach to every project and thrive in collaborative technical environments.</p>
+          <p>Whether you're tendering a complex security package or need a reliable hand on technical documentation, I'm ready to contribute.</p>
+        </div>
+        <div class="ci"><span class="cik">Email</span><span class="civ"><a href="/cdn-cgi/l/email-protection#3455565a5146445558585d575c555a745359555d581a575b59"><span class="__cf_email__" data-cfemail="7415161a1106041518181d171c151a341319151d185a171b19">[email&#160;protected]</span></a></span></div>
+        <div class="ci"><span class="cik">Phone</span><span class="civ"><a href="tel:+4407386804046">+44 07386 804046</a></span></div>
+        <div class="ci"><span class="cik">Location</span><span class="civ">London, United Kingdom</span></div>
+      </div>
+    </div>
+    <div class="ctright">
+      <form class="cf" id="cf">
+        <div><label class="cfl">Name</label><input type="text" placeholder="Your full name" required></div>
+        <div><label class="cfl">Email</label><input type="email" id="femail" placeholder="your@email.com" required></div>
+        <div><label class="cfl">Subject</label><input type="text" id="fsubj" placeholder="Project enquiry, role, etc."></div>
+        <div><label class="cfl">Message</label><textarea id="fmsg" placeholder="Tell me about your project or opportunity..."></textarea></div>
+        <button type="submit" class="btsub">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="flog">Abner Pallichan</span>
+  <span class="fcop">&copy; 2025 &middot; Security Systems Estimator &middot; London, UK</span>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ── CURSOR ── */
+(function(){
+  const dot=document.getElementById('cdot'),ring=document.getElementById('cring');
+  let mx=-200,my=-200,rx=-200,ry=-200,active=false;
+  addEventListener('mousemove',function activate(e){
+    mx=e.clientX;my=e.clientY;rx=mx;ry=my;
+    if(!active){
+      active=true;
+      document.body.classList.add('cur');
+      removeEventListener('mousemove',activate);
+      addEventListener('mousemove',e2=>{mx=e2.clientX;my=e2.clientY});
+      (function t(){
+        dot.style.left=mx+'px';dot.style.top=my+'px';
+        rx+=(mx-rx)*.13;ry+=(my-ry)*.13;
+        ring.style.left=rx+'px';ring.style.top=ry+'px';
+        requestAnimationFrame(t);
+      })();
+      document.querySelectorAll('a,button,.pc,.fbb').forEach(el=>{
+        el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));
+        el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));
+      });
+    }
+  });
+})();
+
+/* ── NAV SCROLL ── */
+addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>60),{passive:true});
+
+/* ── HAMBURGER / MOBILE MENU ── */
+const ham=document.getElementById('ham'),mob=document.getElementById('mob');
+function openMenu(){mob.classList.add('open');ham.classList.add('open');document.body.style.overflow='hidden'}
+function closeMenu(){mob.classList.remove('open');ham.classList.remove('open');document.body.style.overflow=''}
+ham.addEventListener('click',()=>mob.classList.contains('open')?closeMenu():openMenu());
+mob.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+
+/* ── PROJECT DATA ── */
+const PROJS=[
+  {id:1,cat:'hills',cl:'Healthcare',bg:'#1e2d3d',title:'Footscray Hospital',co:'Hills Health Solutions · Melbourne',
+   imgs:['https://www.coxarchitecture.com.au/wp-content/uploads/2024/05/251204-Footscray-Hospital-0481-1980x1320.jpg','https://www.coxarchitecture.com.au/wp-content/uploads/2024/05/NFH_Exterior_240514v4-1980x1114.jpg','https://www.coxarchitecture.com.au/wp-content/uploads/2024/05/01_NFH-Render-1980x1320.jpg','https://www.coxarchitecture.com.au/wp-content/uploads/2024/05/05_NFH-Render-1980x1320.jpg'],
+   desc:"Contributed estimating for security and nurse call systems on the new $1.5B Footscray Hospital — one of Victoria's largest ever health infrastructure projects. Scope included reviewing architectural drawings, producing BOQs and pricing schedules across the multi-building campus, and coordinating with the project team to meet tight tender deadlines.",
+   tags:['BOQ','Nurse Call','Healthcare','Tender','Bluebeam','$1.5B Project']},
+  {id:2,cat:'hills',cl:'Healthcare',bg:'#2e2418',title:'Epworth Freemasons Hospital',co:'Hills Health Solutions · Melbourne',
+   imgs:['https://www.lciconsultants.com.au/wp-content/uploads/2021/05/Epworth-06.jpg','https://www.lciconsultants.com.au/wp-content/uploads/2021/05/Epworth-05.jpg','https://www.lciconsultants.com.au/wp-content/uploads/2021/05/Epworth-04.jpg','https://www.lciconsultants.com.au/wp-content/uploads/2021/05/Epworth-03.jpg','https://www.lciconsultants.com.au/wp-content/uploads/2021/05/Epworth-02.jpg','https://www.lciconsultants.com.au/wp-content/uploads/2021/05/Epworth-01.jpg'],
+   desc:'Provided estimating support for security and healthcare communication systems as part of the $60M Epworth Freemasons redevelopment — a staged upgrade including the new Grey Street Centre and Albert Street car park. Required careful coordination around live hospital operations.',
+   tags:['Healthcare','Nurse Call','Take-off','Staged Works','BOQ','SimPro']},
+  {id:3,cat:'hills',cl:'Healthcare',bg:'#1a2a1c',title:'Alfred Hospital',co:'Hills Health Solutions · Melbourne',
+   imgs:['https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/The_Alfred_Hospital_Melbourne_1.JPG/800px-The_Alfred_Hospital_Melbourne_1.JPG'],
+   desc:"Produced security system estimates and documentation for upgrade works at The Alfred — one of Australia's leading tertiary hospitals and major trauma centres. Scope included access control, cabling routes, and nurse call infrastructure, with all pricing aligned to healthcare-grade standards.",
+   tags:['Access Control','Healthcare','Tender','Compliance','BOQ']},
+  {id:4,cat:'tekno',cl:'Healthcare',bg:'#141e2c',title:'Northern Hospital Upgrade',co:'Teknocorp · Epping, Victoria',
+   imgs:['https://www.kane.com.au/assets/_projectSlide/Northern-Hospital-Stage-2-Finals-15.JPG','https://www.kane.com.au/assets/_projectSlide/Northern-Hospital-Stage-2-Finals-28.JPG','https://www.kane.com.au/assets/_projectSlide/Northern-Hospital-Stage-2-Finals-25.JPG','https://www.kane.com.au/assets/_projectSlide/Northern-Hospital-Stage-2-Finals-16.JPG','https://sparksandpartners.com.au/wp-content/uploads/2019/07/190702-Sparks-Northern-Hospital-Stage-2-LR01-scaled.jpg'],
+   desc:'Supported the security and access control engineering package for the Northern Hospital Inpatient Expansion – Stage 2 in Epping, a $162.7M project delivering 96 new inpatient beds, three operating theatres, and a new ICU. Produced technical drawings using AutoCAD and Revit.',
+   tags:['AutoCAD','Revit','As-Builts','Schematics','Access Control','$162M Project']},
+  {id:5,cat:'tekno',cl:'Aged Care',bg:'#2a2014',title:'Mt Eliza Aged Care Facility',co:'Teknocorp · Mt Eliza, Victoria',
+   imgs:['https://www.kane.com.au/assets/_projectSlide/Mount-Eliza-Aged-Care-Ext-02.jpg','https://www.kane.com.au/assets/_projectSlide/Mount-Eliza-Aged-Care-Ext-01.jpg','https://www.kane.com.au/assets/_projectSlide/Mount-Eliza-Aged-Care-Int-01.jpg'],
+   desc:'Delivered technical drawings and installation schematics for nurse call and security systems at the Mt Eliza aged care facility on the Mornington Peninsula. Produced as-built documentation and coordinated system layout to meet aged care compliance standards.',
+   tags:['Nurse Call','Aged Care','AutoCAD','Schematics','Compliance']},
+  {id:6,cat:'tekno',cl:'Public Infrastructure',bg:'#1c1408',title:'FRV Fire Stations — Victoria',co:'Teknocorp · Victoria-wide',
+   imgs:['https://www.frv.vic.gov.au/sites/default/files/styles/featured_image_desktop/public/2021-07/FRV%20Station%20Eastern%20Hill%20drone%20shot%20HiRes.jpg'],
+   desc:'Produced security and access control technical drawings and schematics across multiple Fire Rescue Victoria fire stations throughout Victoria. Work included as-built documentation, access control system layouts, and installation schematics to FRV compliance standards.',
+   tags:['Access Control','Public Infrastructure','AutoCAD','FRV','Schematics','Multi-Site']}
+];
+
+const timers={};
+function card(p){
+  const d=document.createElement('div');
+  d.className='pc';d.style.background=p.bg;
+  const strip=document.createElement('div');strip.className='istrip';strip.dataset.i='0';
+  p.imgs.forEach(u=>{
+    const s=document.createElement('div');s.className='islide';s.style.backgroundColor=p.bg;
+    const img=new Image();img.onload=()=>{s.style.backgroundImage=`url('${u}')`};img.src=u;
+    strip.appendChild(s);
+  });
+  const vig=document.createElement('div');vig.className='pvig';
+  const lbl=document.createElement('div');lbl.className='plbl';lbl.innerHTML=`<span class="pclbl">${p.cl}</span>${p.title}`;
+  const dots=document.createElement('div');dots.className='pdots';
+  if(p.imgs.length>1)p.imgs.forEach((_,i)=>{const s=document.createElement('span');if(!i)s.classList.add('on');dots.appendChild(s)});
+  const ov=document.createElement('div');ov.className='pco';
+  ov.innerHTML=`<div class="pcc"><div class="pccat">${p.cl}</div><div class="pcttl">${p.title}</div><div class="pcsub">${p.co}</div></div><div class="parr">↗</div>`;
+  d.append(strip,vig,lbl,dots,ov);
+  if(p.imgs.length>1){
+    timers[p.id]=setInterval(()=>{
+      let i=(+strip.dataset.i+1)%p.imgs.length;strip.dataset.i=i;
+      strip.style.transform=`translateX(-${i*100}%)`;
+      dots.querySelectorAll('span').forEach((s,j)=>s.classList.toggle('on',j===i));
+    },3200);
+  }
+  d.addEventListener('click',()=>openModal(p));
+  return d;
+}
+
+function render(f){
+  Object.values(timers).forEach(clearInterval);
+  const g=document.getElementById('pg');g.innerHTML='';
+  (f==='all'?PROJS:PROJS.filter(p=>p.cat===f)).forEach(p=>g.appendChild(card(p)));
+}
+document.getElementById('filterBar').addEventListener('click',e=>{
+  const b=e.target.closest('.fbb');if(!b)return;
+  document.querySelectorAll('.fbb').forEach(x=>x.classList.remove('act'));
+  b.classList.add('act');render(b.dataset.filter);
+});
+render('all');
+
+/* ── MODAL ── */
+let mi=0,mim=[];
+function buildGal(imgs,bg){
+  const s=document.getElementById('mgs'),d=document.getElementById('mgd');
+  s.innerHTML='';d.innerHTML='';mim=imgs;mi=0;
+  if(!imgs.length){const f=document.createElement('div');f.className='mgfb';f.style.background=bg;s.appendChild(f);return}
+  imgs.forEach((u,i)=>{
+    const sl=document.createElement('div');sl.className='mgsl';sl.style.backgroundColor=bg;
+    const img=new Image();img.onload=()=>{sl.style.backgroundImage=`url('${u}')`};img.src=u;
+    s.appendChild(sl);
+    const dt=document.createElement('span');if(!i)dt.classList.add('on');d.appendChild(dt);
+  });
+  const show=imgs.length>1;
+  document.getElementById('mgp').style.display=show?'flex':'none';
+  document.getElementById('mgn').style.display=show?'flex':'none';
+  d.style.display=show?'flex':'none';
+}
+function mgoto(i){
+  mi=(i+mim.length)%mim.length;
+  document.getElementById('mgs').style.transform=`translateX(-${mi*100}%)`;
+  document.querySelectorAll('#mgd span').forEach((s,j)=>s.classList.toggle('on',j===mi));
+}
+document.getElementById('mgp').addEventListener('click',()=>mgoto(mi-1));
+document.getElementById('mgn').addEventListener('click',()=>mgoto(mi+1));
+function openModal(p){
+  buildGal(p.imgs,p.bg);
+  document.getElementById('mcat').textContent=p.cl;
+  document.getElementById('mttl').textContent=p.title;
+  document.getElementById('mco').textContent=p.co;
+  document.getElementById('mtxt').textContent=p.desc;
+  document.getElementById('mta').innerHTML=p.tags.map(t=>`<span class="mtag">${t}</span>`).join('');
+  document.getElementById('mw').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){document.getElementById('mw').classList.remove('open');document.body.style.overflow=''}
+document.getElementById('mc').addEventListener('click',closeModal);
+document.getElementById('mw').addEventListener('click',e=>{if(e.target===document.getElementById('mw'))closeModal()});
+addEventListener('keydown',e=
