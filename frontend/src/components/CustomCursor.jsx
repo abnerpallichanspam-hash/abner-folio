@@ -38,17 +38,43 @@ const CustomCursor = () => {
       requestRef.current = requestAnimationFrame(animate);
     };
 
-    const handleMouseEnter = (e) => {
-      if (e.target.matches('a, button, input, textarea, [role="button"]')) {
-        if (dotRef.current) dotRef.current.style.transform += ' scale(1.5)';
-        if (ringRef.current) ringRef.current.style.transform += ' scale(1.5)';
+    const handleMouseOver = (e) => {
+      const target = e.target;
+      if (target && (
+        target.tagName === 'A' || 
+        target.tagName === 'BUTTON' || 
+        target.tagName === 'INPUT' || 
+        target.tagName === 'TEXTAREA' ||
+        target.getAttribute('role') === 'button'
+      )) {
+        if (dotRef.current) {
+          dotRef.current.style.width = '12px';
+          dotRef.current.style.height = '12px';
+        }
+        if (ringRef.current) {
+          ringRef.current.style.width = '48px';
+          ringRef.current.style.height = '48px';
+        }
       }
     };
 
-    const handleMouseLeave = (e) => {
-      if (e.target.matches('a, button, input, textarea, [role="button"]')) {
-        if (dotRef.current) dotRef.current.style.transform = dotRef.current.style.transform.replace(' scale(1.5)', '');
-        if (ringRef.current) ringRef.current.style.transform = ringRef.current.style.transform.replace(' scale(1.5)', '');
+    const handleMouseOut = (e) => {
+      const target = e.target;
+      if (target && (
+        target.tagName === 'A' || 
+        target.tagName === 'BUTTON' || 
+        target.tagName === 'INPUT' || 
+        target.tagName === 'TEXTAREA' ||
+        target.getAttribute('role') === 'button'
+      )) {
+        if (dotRef.current) {
+          dotRef.current.style.width = '8px';
+          dotRef.current.style.height = '8px';
+        }
+        if (ringRef.current) {
+          ringRef.current.style.width = '32px';
+          ringRef.current.style.height = '32px';
+        }
       }
     };
 
