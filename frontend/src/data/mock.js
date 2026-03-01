@@ -25,7 +25,7 @@ export const experience = [
       "Maintained profitability and commercial control",
       "Liaised with clients, suppliers, and installation teams"
     ],
-    image: "https://images.unsplash.com/photo-1519494140681-8b17d830a3e9"
+    image: "https://images.unsplash.com/photo-1626315869436-d6781ba69d6e?crop=entropy&cs=srgb&fm=jpg&q=85"
   },
   {
     id: 2,
@@ -39,7 +39,7 @@ export const experience = [
       "Prepared tender documentation and pricing schedules",
       "Acted as technical interface between stakeholders"
     ],
-    image: "https://images.unsplash.com/photo-1600622269746-258d4124170a"
+    image: "https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?crop=entropy&cs=srgb&fm=jpg&q=85"
   },
   {
     id: 3,
@@ -53,7 +53,7 @@ export const experience = [
       "Assisted with project handovers and compliance documentation",
       "Created system layouts and pricing inputs"
     ],
-    image: "https://images.unsplash.com/photo-1587556930799-8dca6fad6d41"
+    image: "https://images.unsplash.com/photo-1587351021355-a479a299d2f9?crop=entropy&cs=srgb&fm=jpg&q=85"
   }
 ];
 
