@@ -49,14 +49,26 @@ const Experience = () => {
 
               {/* Image */}
               <div className={`${index % 2 === 1 ? 'lg:order-1' : ''}`}>
-                <div className="relative h-80 rounded-lg overflow-hidden shadow-lg">
-                  <img
-                    src={exp.image}
-                    alt={exp.company}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f10]/40 to-transparent" />
+                <div 
+                  className="relative h-80 rounded-lg overflow-hidden shadow-lg"
+                  style={exp.isPattern ? {
+                    backgroundImage: `url("${exp.image}")`,
+                    backgroundSize: 'auto',
+                    backgroundRepeat: 'repeat',
+                    backgroundColor: '#fafafa'
+                  } : {}}
+                >
+                  {!exp.isPattern && (
+                    <>
+                      <img
+                        src={exp.image}
+                        alt={exp.company}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f10]/40 to-transparent" />
+                    </>
+                  )}
                 </div>
               </div>
             </div>
