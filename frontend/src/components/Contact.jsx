@@ -120,7 +120,7 @@ const Contact = () => {
             {/* Decorative Image */}
             <div className="hidden lg:block relative h-64 rounded-lg overflow-hidden mt-8">
               <img
-                src="https://images.unsplash.com/photo-1648224394449-d10dbff84b8e"
+                src="https://images.unsplash.com/photo-1606731685022-7c79f9bc868b?crop=entropy&cs=srgb&fm=jpg&q=85"
                 alt="Contact"
                 className="w-full h-full object-cover"
               />
