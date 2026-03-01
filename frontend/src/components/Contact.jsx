@@ -118,14 +118,15 @@ const Contact = () => {
             </div>
 
             {/* Decorative Image */}
-            <div className="hidden lg:block relative h-64 rounded-lg overflow-hidden mt-8">
-              <img
-                src="https://images.unsplash.com/photo-1606731685022-7c79f9bc868b?crop=entropy&cs=srgb&fm=jpg&q=85"
-                alt="Contact"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f10]/60 to-transparent" />
-            </div>
+            <div 
+              className="hidden lg:block relative h-64 rounded-lg overflow-hidden mt-8"
+              style={{
+                backgroundImage: `url("${require('../data/geometricPatterns').geometricPatterns.modern1}")`,
+                backgroundSize: 'auto',
+                backgroundRepeat: 'repeat',
+                backgroundColor: '#fafafa'
+              }}
+            />
           </div>
 
           {/* Contact Form */}
