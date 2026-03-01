@@ -56,7 +56,7 @@ const About = () => {
           <div className="space-y-8">
             <div className="relative h-96 rounded-lg overflow-hidden">
               <img
-                src="https://images.unsplash.com/photo-1518199057741-27f927456457"
+                src="https://images.unsplash.com/photo-1588729533739-f2cf4a063a95?crop=entropy&cs=srgb&fm=jpg&q=85"
                 alt="Professional workspace"
                 className="w-full h-full object-cover"
               />
