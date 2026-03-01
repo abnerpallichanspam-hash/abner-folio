@@ -18,9 +18,9 @@ const CustomCursor = () => {
     };
 
     const animate = () => {
-      // Smooth follow animation
-      const dotSpeed = 0.15;
-      const ringSpeed = 0.08;
+      // Smooth follow animation with reduced lag
+      const dotSpeed = 0.35;
+      const ringSpeed = 0.2;
 
       dotPos.current.x += (mousePos.current.x - dotPos.current.x) * dotSpeed;
       dotPos.current.y += (mousePos.current.y - dotPos.current.y) * dotSpeed;
