@@ -1,3 +1,5 @@
+import { geometricPatterns } from './geometricPatterns';
+
 // Mock data for portfolio
 
 export const personalInfo = {
@@ -25,7 +27,8 @@ export const experience = [
       "Maintained profitability and commercial control",
       "Liaised with clients, suppliers, and installation teams"
     ],
-    image: "https://images.unsplash.com/photo-1626315869436-d6781ba69d6e?crop=entropy&cs=srgb&fm=jpg&q=85"
+    image: geometricPatterns.healthcare1,
+    isPattern: true
   },
   {
     id: 2,
@@ -39,7 +42,8 @@ export const experience = [
       "Prepared tender documentation and pricing schedules",
       "Acted as technical interface between stakeholders"
     ],
-    image: "https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?crop=entropy&cs=srgb&fm=jpg&q=85"
+    image: geometricPatterns.technical1,
+    isPattern: true
   },
   {
     id: 3,
@@ -53,7 +57,8 @@ export const experience = [
       "Assisted with project handovers and compliance documentation",
       "Created system layouts and pricing inputs"
     ],
-    image: "https://images.unsplash.com/photo-1587351021355-a479a299d2f9?crop=entropy&cs=srgb&fm=jpg&q=85"
+    image: geometricPatterns.professional1,
+    isPattern: true
   }
 ];
 
