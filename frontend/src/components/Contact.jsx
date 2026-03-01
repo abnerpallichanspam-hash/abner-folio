@@ -5,6 +5,10 @@ import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { useToast } from '../hooks/use-toast';
 import { personalInfo } from '../data/mock';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const API = `${BACKEND_URL}/api`;
 
 const Contact = () => {
   const { toast } = useToast();
@@ -27,16 +31,26 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Mock submission - will be replaced with actual API call
-    setTimeout(() => {
-      console.log('Form submitted:', formData);
+    try {
+      const response = await axios.post(`${API}/contact`, formData);
+      
+      if (response.data.success) {
+        toast({
+          title: "Message Sent!",
+          description: response.data.message,
+        });
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
       toast({
-        title: "Message Sent!",
-        description: "Thank you for reaching out. I'll get back to you soon.",
+        title: "Error",
+        description: "Failed to send message. Please try again or contact me directly.",
+        variant: "destructive"
       });
-      setFormData({ name: '', email: '', subject: '', message: '' });
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   return (
