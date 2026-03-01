@@ -105,9 +105,9 @@ export const projects = [
     description: "Comprehensive nurse call and security system upgrade for Northern Hospital. Delivered complete technical drawings, installation schematics, and as-built documentation for modern healthcare communication infrastructure.",
     scope: "Nurse Call & Security Systems",
     year: "2023",
-    image: "https://images.unsplash.com/photo-1519494140681-8b17d830a3e9",
+    image: "https://images.unsplash.com/photo-1626315869436-d6781ba69d6e?crop=entropy&cs=srgb&fm=jpg&q=85",
     gallery: [
-      "https://images.unsplash.com/photo-1519494140681-8b17d830a3e9",
+      "https://images.unsplash.com/photo-1626315869436-d6781ba69d6e?crop=entropy&cs=srgb&fm=jpg&q=85",
       "https://images.unsplash.com/photo-1766299892693-2370a8d47e23",
       "https://images.unsplash.com/photo-1648224394449-d10dbff84b8e"
     ]
@@ -122,9 +122,9 @@ export const projects = [
     description: "Complete nurse call and security fitout for aged care facility. Designed integrated systems for resident safety, staff communication, and facility security with focus on accessibility and reliability.",
     scope: "Nurse Call & Security Fitouts",
     year: "2023",
-    image: "https://images.unsplash.com/photo-1685449856292-3016672f0db0",
+    image: "https://images.unsplash.com/photo-1685449856292-3016672f0db0?crop=entropy&cs=srgb&fm=jpg&q=85",
     gallery: [
-      "https://images.unsplash.com/photo-1685449856292-3016672f0db0",
+      "https://images.unsplash.com/photo-1685449856292-3016672f0db0?crop=entropy&cs=srgb&fm=jpg&q=85",
       "https://images.unsplash.com/photo-1584515933487-779824d29309",
       "https://images.unsplash.com/photo-1766299892693-2370a8d47e23"
     ]
@@ -139,10 +139,10 @@ export const projects = [
     description: "Security system fitouts across multiple Fire Rescue Victoria stations throughout the state. Standardized security infrastructure design and implementation for critical emergency service facilities.",
     scope: "Security Fitouts",
     year: "2022-2023",
-    image: "https://images.unsplash.com/photo-1521386455230-4ceaa25b72be",
+    image: "https://images.unsplash.com/photo-1600622269746-258d4124170a?crop=entropy&cs=srgb&fm=jpg&q=85",
     gallery: [
-      "https://images.unsplash.com/photo-1521386455230-4ceaa25b72be",
-      "https://images.unsplash.com/photo-1697382608786-bcf4c113b86e",
+      "https://images.unsplash.com/photo-1600622269746-258d4124170a?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "https://images.unsplash.com/photo-1518199057741-27f927456457?crop=entropy&cs=srgb&fm=jpg&q=85",
       "https://images.unsplash.com/photo-1648224394449-d10dbff84b8e"
     ]
   },
@@ -156,10 +156,10 @@ export const projects = [
     description: "Large-scale security fitout for major sporting venue. Comprehensive access control, CCTV integration, and perimeter security systems designed for high-capacity public facility.",
     scope: "Security Fitout",
     year: "2023",
-    image: "https://images.unsplash.com/photo-1543333995-a78aea2eee50",
+    image: "https://images.unsplash.com/photo-1663832886113-3d55ed62d1ca?crop=entropy&cs=srgb&fm=jpg&q=85",
     gallery: [
-      "https://images.unsplash.com/photo-1543333995-a78aea2eee50",
-      "https://images.unsplash.com/photo-1697382608786-bcf4c113b86e",
+      "https://images.unsplash.com/photo-1663832886113-3d55ed62d1ca?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "https://images.unsplash.com/photo-1644107047296-9a40e2fb9a01?crop=entropy&cs=srgb&fm=jpg&q=85",
       "https://images.unsplash.com/photo-1648224394467-651071f36385"
     ]
   },
@@ -176,7 +176,7 @@ export const projects = [
     image: "https://images.unsplash.com/photo-1584515933487-779824d29309",
     gallery: [
       "https://images.unsplash.com/photo-1584515933487-779824d29309",
-      "https://images.unsplash.com/photo-1685449856292-3016672f0db0",
+      "https://images.unsplash.com/photo-1685449856292-3016672f0db0?crop=entropy&cs=srgb&fm=jpg&q=85",
       "https://images.unsplash.com/photo-1766299892693-2370a8d47e23"
     ]
   },
@@ -190,9 +190,9 @@ export const projects = [
     description: "Comprehensive nurse call system fitout for major metropolitan hospital. Prepared detailed cost estimates, conducted site surveys, and delivered complete procurement schedules for healthcare communication infrastructure.",
     scope: "Nurse Call Fitout",
     year: "2024-2025",
-    image: "https://images.unsplash.com/photo-1654762930571-dcf2ebc11542",
+    image: "https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?crop=entropy&cs=srgb&fm=jpg&q=85",
     gallery: [
-      "https://images.unsplash.com/photo-1654762930571-dcf2ebc11542",
+      "https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?crop=entropy&cs=srgb&fm=jpg&q=85",
       "https://images.unsplash.com/photo-1766299892693-2370a8d47e23",
       "https://images.unsplash.com/photo-1648224394449-d10dbff84b8e"
     ]
@@ -207,9 +207,9 @@ export const projects = [
     description: "Nurse call system upgrade for premium private hospital. Integrated CAD outputs into commercial submissions, ensuring compliance with healthcare standards and patient care requirements.",
     scope: "Nurse Call Fitout",
     year: "2024-2025",
-    image: "https://images.unsplash.com/photo-1742436599018-27a118d635ac",
+    image: "https://images.pexels.com/photos/668300/pexels-photo-668300.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
     gallery: [
-      "https://images.unsplash.com/photo-1742436599018-27a118d635ac",
+      "https://images.pexels.com/photos/668300/pexels-photo-668300.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       "https://images.unsplash.com/photo-1648224394449-d10dbff84b8e",
       "https://images.unsplash.com/photo-1766299892693-2370a8d47e23"
     ]
@@ -224,9 +224,9 @@ export const projects = [
     description: "Major nurse call system implementation for one of Victoria's leading hospitals. Managed complete estimating workflow from take-offs to tender submission for critical healthcare infrastructure.",
     scope: "Nurse Call Fitout",
     year: "2024-2025",
-    image: "https://images.unsplash.com/photo-1519494140681-8b17d830a3e9",
+    image: "https://images.unsplash.com/photo-1587351021355-a479a299d2f9?crop=entropy&cs=srgb&fm=jpg&q=85",
     gallery: [
-      "https://images.unsplash.com/photo-1519494140681-8b17d830a3e9",
+      "https://images.unsplash.com/photo-1587351021355-a479a299d2f9?crop=entropy&cs=srgb&fm=jpg&q=85",
       "https://images.unsplash.com/photo-1648224394467-651071f36385",
       "https://images.unsplash.com/photo-1766299892693-2370a8d47e23"
     ]
@@ -241,11 +241,11 @@ export const projects = [
     description: "Regional hospital healthcare systems project. Delivered comprehensive cost plans and technical documentation for nurse call infrastructure serving regional healthcare community.",
     scope: "Healthcare Systems",
     year: "2024-2025",
-    image: "https://images.unsplash.com/photo-1600622269746-258d4124170a",
+    image: "https://images.pexels.com/photos/1692693/pexels-photo-1692693.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
     gallery: [
-      "https://images.unsplash.com/photo-1600622269746-258d4124170a",
+      "https://images.pexels.com/photos/1692693/pexels-photo-1692693.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       "https://images.unsplash.com/photo-1766299892693-2370a8d47e23",
-      "https://images.unsplash.com/photo-1654762930571-dcf2ebc11542"
+      "https://images.unsplash.com/photo-1626315869436-d6781ba69d6e?crop=entropy&cs=srgb&fm=jpg&q=85"
     ]
   },
   {
@@ -258,11 +258,11 @@ export const projects = [
     description: "Private hospital nurse call and communication systems. Conducted site surveys, liaised with suppliers, and validated system specifications for quality patient care infrastructure.",
     scope: "Healthcare Systems",
     year: "2024-2025",
-    image: "https://images.unsplash.com/photo-1587556930799-8dca6fad6d41",
+    image: "https://images.unsplash.com/photo-1626315869436-d6781ba69d6e?crop=entropy&cs=srgb&fm=jpg&q=85",
     gallery: [
-      "https://images.unsplash.com/photo-1587556930799-8dca6fad6d41",
+      "https://images.unsplash.com/photo-1626315869436-d6781ba69d6e?crop=entropy&cs=srgb&fm=jpg&q=85",
       "https://images.unsplash.com/photo-1648224394449-d10dbff84b8e",
-      "https://images.unsplash.com/photo-1742436599018-27a118d635ac"
+      "https://images.pexels.com/photos/668300/pexels-photo-668300.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
     ]
   }
 ];
