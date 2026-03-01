@@ -68,14 +68,26 @@ const Projects = () => {
               onClick={() => openModal(project)}
               className="group cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-[#e5e5e5]"
             >
-              <div className="relative h-64 overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f10]/80 via-[#0f0f10]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div 
+                className="relative h-64 overflow-hidden"
+                style={project.isPattern ? {
+                  backgroundImage: `url("${project.image}")`,
+                  backgroundSize: 'auto',
+                  backgroundRepeat: 'repeat',
+                  backgroundColor: '#fafafa'
+                } : {}}
+              >
+                {!project.isPattern && (
+                  <>
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f10]/80 via-[#0f0f10]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </>
+                )}
+                <div className="absolute bottom-4 left-4 right-4 text-[#0f0f10] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <p className="text-sm font-medium">{project.scope}</p>
                 </div>
               </div>
